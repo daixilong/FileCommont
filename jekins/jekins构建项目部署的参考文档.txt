@@ -1,0 +1,2 @@
+http://www.cnblogs.com/yajing-zh/p/5109517.html   持续化集成的系统相关的配置
+https://www.cnblogs.com/yajing-zh/p/5111060.html   构建项目的相关配置
