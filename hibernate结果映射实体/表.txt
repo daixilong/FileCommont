@@ -1,0 +1,33 @@
+-- Create table
+create table TB_TEST
+(
+  T_ID        INTEGER not null,
+  NAME        VARCHAR2(20),
+  DESCRIPTION VARCHAR2(50)
+)
+tablespace XGGL
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table TB_TEST
+  add primary key (T_ID)
+  using index 
+  tablespace XGGL
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    next 1M
+    minextents 1
+    maxextents unlimited
+  );
