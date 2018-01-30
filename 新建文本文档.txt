@@ -1,9 +1,8 @@
 https://github.com/527515025/springBoot
 http://blog.csdn.net/u012373815/article/details/57532292 springsecurityÑ§Ï°±È½ÏºÃµÄ·½°¸
-
-	/**
+/**
 	 *
-	 * @param list 
+	 * @param list
 	 * @param keyMethName 需要的列
 	 * @param c  类名
 	 * @param <K>
@@ -15,21 +14,16 @@ http://blog.csdn.net/u012373815/article/details/57532292 springsecurityÑ§Ï°�
 		if(list!=null && list.size()>0){
 			try {
 				String [] strs= keyMethName.split(",");
-				List<Method> methods=new ArrayList<>();
-				for (String propertyName:strs
-					 ) {
-					PropertyDescriptor propDesc = new PropertyDescriptor(propertyName, c);
-					Method methodGetKey = propDesc.getReadMethod();
-					methods.add(methodGetKey);
-				}
 				for (V v :list
 						) {
-					String k="";
-					for (Method m:methods
-						 ) {
-						k+=m.invoke(v)+",";
-					}
-					K key=(K)k.substring(0,k.length()-1);
+					String value=keyMethName;
+					for (String propertyName : strs
+							) {
+							PropertyDescriptor propDesc = new PropertyDescriptor(propertyName, c);
+							Method methodGetKey = propDesc.getReadMethod();
+						    value= value.replace(propertyName,methodGetKey.invoke(v).toString());
+						}
+					K key=(K)value;
 					List<V> listV= (map.containsKey(key)?map.get(key):new ArrayList<V>());
 					listV.add(v);
 					map.put(key,listV);
