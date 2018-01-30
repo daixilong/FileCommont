@@ -1,2 +1,43 @@
 https://github.com/527515025/springBoot
-http://blog.csdn.net/u012373815/article/details/57532292 springsecurityѧϰ�ȽϺõķ���
+http://blog.csdn.net/u012373815/article/details/57532292 springsecurityÑ§Ï°±È½ÏºÃµÄ·½°¸
+
+	/**
+	 *
+	 * @param list 
+	 * @param keyMethName 需要的列
+	 * @param c  类名
+	 * @param <K>
+	 * @param <V>
+     * @return
+     */
+	private static <K,V> Map<K,List<V>> list2Map(List<V> list,String keyMethName,Class<V> c){
+		Map<K,List<V> > map=new HashMap<>();
+		if(list!=null && list.size()>0){
+			try {
+				String [] strs= keyMethName.split(",");
+				List<Method> methods=new ArrayList<>();
+				for (String propertyName:strs
+					 ) {
+					PropertyDescriptor propDesc = new PropertyDescriptor(propertyName, c);
+					Method methodGetKey = propDesc.getReadMethod();
+					methods.add(methodGetKey);
+				}
+				for (V v :list
+						) {
+					String k="";
+					for (Method m:methods
+						 ) {
+						k+=m.invoke(v)+",";
+					}
+					K key=(K)k.substring(0,k.length()-1);
+					List<V> listV= (map.containsKey(key)?map.get(key):new ArrayList<V>());
+					listV.add(v);
+					map.put(key,listV);
+				}
+
+			}catch (Exception e){
+				System.out.println("执行出错："+e.getMessage());
+			}
+		}
+		return map;
+	}
